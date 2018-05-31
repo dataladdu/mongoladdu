@@ -18,7 +18,7 @@ mongoladdu
 ## How to use it
 
 1. create folder named `migrations`
-2. create `config.yml` file with in `migrations` folder
+2. create `config.yml` file with in `migrations` folder and place your environment specific configurations
 
 ```yml
 dev:
@@ -27,7 +27,7 @@ dev:
   db_name: dev_db
 ```
 
-3. create migration scripts with in `migrations` folder
+3. create migration scripts with in `migrations` folder. file names should follow patter `<index>_<description>.py`
 
 ```python
 def run(db):

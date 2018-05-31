@@ -6,7 +6,7 @@ mongoladdu
 * use `pip`
 
     ```bash
-    $ pip install mongodb-migrations
+    $ pip install mongoladdu
     ```
 
 * from source code

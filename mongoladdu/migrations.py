@@ -93,7 +93,7 @@ class Migrations:
 
     def run(self):
         yet_to_run = self._yet_to_run()
-        logger.info('Fount %i scripts to run' % len(yet_to_run))
+        logger.info('Found %i script(s) to run' % len(yet_to_run))
         for migration in yet_to_run:
             migration.run(self.db)
             self.repo.insert(migration)

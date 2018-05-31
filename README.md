@@ -36,6 +36,8 @@ def run(db):
 
 4. run migrate `mongoladdu <env> run`
 
-``mongoladdu dev run``
+```console
+mongoladdu dev run
+```
 
 

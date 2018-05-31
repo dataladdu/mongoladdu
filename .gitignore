@@ -1,0 +1,10 @@
+*.pyc
+__pycache__
+.eggs
+mongoladdu.egg-info
+.cache
+.coverage
+migrations
+dist
+.idea
+build

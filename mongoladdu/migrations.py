@@ -11,9 +11,9 @@ logger = logging.getLogger(__name__)
 
 
 class Paths:
-    def __init__(self):
-        self.migration = 'migrations'
-        self.config = 'config.yml'
+    def __init__(self, migration=None, config=None):
+        self.migration = migration if migration else 'migrations'
+        self.config = config if config else 'config.yml'
         self._validate()
 
     def config_path(self):
@@ -105,19 +105,20 @@ class Migrations:
 
 
 class MongoLaddu:
-    def __init__(self, env: str=None):
+    def __init__(self, env: str = None):
         self.env = env
-        self.paths = Paths()
 
     def run(self):
-        self._run(Config.for_env(self.paths, self.env))
+        paths = Paths()
+        self._run(Config.for_env(paths, self.env), paths)
 
-    def run_for_config(self, db_host, db_port, db_name):
-        self._run(Config.for_values(db_host, db_port, db_name))
+    def run_for_config(self, db_host, db_port, db_name, migration_dir_path=None, config_file_name=None):
+        paths = Paths(migration_dir_path, config_file_name) if migration_dir_path or config_file_name else Paths()
+        self._run(Config.for_values(db_host, db_port, db_name), paths)
 
     def _db(self, config):
         return Db.get(config)
 
-    def _run(self, config):
+    def _run(self, config, paths):
         db = self._db(config)
-        Migrations(db, self.paths).run()
+        Migrations(db, paths).run()

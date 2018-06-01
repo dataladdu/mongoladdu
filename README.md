@@ -40,4 +40,7 @@ def run(db):
 mongoladdu dev run
 ```
 
+5. Alternate options for providing configuration
+
+can be directly invoked from python code using, MongoLaddu().run_for_config('localhost', 27017, 'dev_db')
 

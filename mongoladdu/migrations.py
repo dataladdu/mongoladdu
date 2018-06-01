@@ -26,9 +26,9 @@ class Paths:
 
 
 class Config:
-    def __init__(self, host, port, db_name):
-        self.host = host
-        self.port = port
+    def __init__(self, db_host, db_port, db_name):
+        self.db_host = db_host
+        self.db_port = db_port
         self.db_name = db_name
 
     @classmethod
@@ -39,13 +39,17 @@ class Config:
             logger.error('Unable to find config for environment %s' % env)
 
         env_config = config[env]
-        return Config(env_config['host'], env_config['port'], env_config['db_name'])
+        return Config(env_config['db_host'], env_config['db_port'], env_config['db_name'])
+
+    @classmethod
+    def for_values(cls, db_host, db_port, db_name):
+        return cls(db_host, db_port, db_name)
 
 
 class Db:
     @staticmethod
     def get(config: Config):
-        return MongoClient(config.host, config.port)[config.db_name]
+        return MongoClient(config.db_host, config.db_port)[config.db_name]
 
 
 class Migration():
@@ -101,13 +105,19 @@ class Migrations:
 
 
 class MongoLaddu:
-    def __init__(self, env: str):
+    def __init__(self, env: str=None):
         self.env = env
         self.paths = Paths()
 
     def run(self):
-        db = self._db()
-        Migrations(db, self.paths).run()
+        self._run(Config.for_env(self.paths, self.env))
 
-    def _db(self):
-        return Db.get(Config.for_env(self.paths, self.env))
+    def run_for_config(self, db_host, db_port, db_name):
+        self._run(Config.for_values(db_host, db_port, db_name))
+
+    def _db(self, config):
+        return Db.get(config)
+
+    def _run(self, config):
+        db = self._db(config)
+        Migrations(db, self.paths).run()

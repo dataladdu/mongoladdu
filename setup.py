@@ -2,9 +2,9 @@ from setuptools import setup
 
 setup(
     name='mongoladdu',
-    version='0.0.1',
+    version='0.0.2',
     url='https://github.com/dataladdu/mongoladdu',
-    download_url='https://github.com/dataladdu/mongoladdu/archive/0.0.1.tar.gz',
+    download_url='https://github.com/dataladdu/mongoladdu/archive/0.0.2.tar.gz',
     license='MIT',
     author='Deepan Subramani',
     author_email='subramani.deepan@gmail.com',
